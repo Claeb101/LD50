@@ -7,6 +7,7 @@ public class Barrel : MonoBehaviour
 {
     public float chainDelay = 0.5f;
     private Target _target;
+    public bool exploded = false;
 
     private GameManager _manager;
     // Start is called before the first frame update
@@ -24,9 +25,15 @@ public class Barrel : MonoBehaviour
 
     public IEnumerator Explode()
     {
+        exploded = true;
         Debug.Log("exploding " + gameObject.name);
+        GetComponent<AudioSource>().Play();
+        
         yield return new WaitForSeconds(chainDelay);
-        if(_manager.isPlaying) _manager.OnLose();
+        if (_manager.isPlaying)
+        {
+            _manager.OnLose();
+        }
 
         Destroy(gameObject);
     }

@@ -108,6 +108,8 @@ public class Shooter : MonoBehaviour
         bullet.dir = (target.transform.position - transform.position).normalized;
         bullet.speed = shootSpeed;
         
+        GetComponent<AudioSource>().Play();
+        
         _canShoot = false;
         yield return new WaitForSeconds(shootCooldown);
         _canShoot = true;

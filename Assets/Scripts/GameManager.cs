@@ -12,7 +12,6 @@ public class GameManager : MonoBehaviour
 
     private void OnGUI()
     {
-        Debug.Log("sorting visually");
         SortSprites();
     }
 
@@ -46,7 +45,14 @@ public class GameManager : MonoBehaviour
 
     public void OnLose()
     {
-        Debug.Log("dead");
+        foreach (var barrel in FindObjectsOfType<Barrel>())
+        {
+            if (barrel && !barrel.exploded)
+            {
+                StartCoroutine(barrel.Explode());
+            }
+        }
+        
         isPlaying = false;
         
         endGameCanvas.SetActive(true);
