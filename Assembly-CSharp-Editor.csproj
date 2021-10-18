@@ -41,9 +41,10 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
+     <Compile Include="Assets\Editor\GameManagerEditor.cs" />
      <Compile Include="Assets\Editor\BarrelSpawnerEditor.cs" />
      <Compile Include="Assets\Editor\SpawnerEditor.cs" />
-     <Compile Include="Assets\Editor\GameManagerEditor.cs" />
+     <Compile Include="Assets\Editor\FenceSpawnerEditor.cs" />
      <Reference Include="UnityEngine">
      <HintPath>C:/Program Files/Unity/Hub/Editor/2021.1.23f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
      </Reference>

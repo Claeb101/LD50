@@ -20,6 +20,7 @@ public class CardPlacer : MonoBehaviour
         _validArea = placeableArea.GetComponent<Collider2D>();
         _mainCam = FindObjectOfType<Camera>();
         _vineyard = GetComponent<Vineyard>();
+        placeableArea.SetActive(false);
     }
 
     // Update is called once per frame
@@ -30,6 +31,7 @@ public class CardPlacer : MonoBehaviour
         placeableArea.GetComponent<Animator>().SetBool("Active", _selector.selectedCard != null);
         if (_selector.selectedCard != null)
         {
+            placeableArea.SetActive(true);
             if (mouse.leftButton.wasReleasedThisFrame)
             {
                 Vector2 mousePos = _mainCam.ScreenToWorldPoint(mouse.position.ReadValue());
