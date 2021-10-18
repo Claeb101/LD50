@@ -44,7 +44,10 @@
      <Compile Include="Assets\Scripts\Vineyard.cs" />
      <Compile Include="Assets\Scripts\Barrel.cs" />
      <Compile Include="Assets\Scripts\Card.cs" />
+     <Compile Include="Assets\Scripts\CamMover.cs" />
      <Compile Include="Assets\Scripts\CardSelector.cs" />
+     <Compile Include="Assets\Scripts\Menu.cs" />
+     <Compile Include="Assets\Scripts\BarrelSpawner.cs" />
      <Compile Include="Assets\Scripts\Shooter.cs" />
      <Compile Include="Assets\Scripts\Target.cs" />
      <Compile Include="Assets\Scripts\GameManager.cs" />
@@ -52,9 +55,8 @@
      <Compile Include="Assets\Scripts\Spawner.cs" />
      <Compile Include="Assets\Scripts\CardPlacer.cs" />
      <Compile Include="Assets\Scripts\Bomber.cs" />
-     <Compile Include="Assets\Scripts\Menu.cs" />
-     <Compile Include="Assets\Scripts\BarrelSpawner.cs" />
-     <Compile Include="Assets\Scripts\CamMover.cs" />
+     <Compile Include="Assets\Scripts\TimedDestroy.cs" />
+     <Compile Include="Assets\Scripts\AudioPlayer.cs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
@@ -749,6 +751,12 @@
      <Reference Include="Unity.2D.IK.Runtime">
      <HintPath>D:/CalebArulandu/Projects/GameDevelopment/Projects/Current/LD49/Library/ScriptAssemblies/Unity.2D.IK.Runtime.dll</HintPath>
      </Reference>
+     <Reference Include="Cinemachine">
+     <HintPath>D:/CalebArulandu/Projects/GameDevelopment/Projects/Current/LD49/Library/ScriptAssemblies/Cinemachine.dll</HintPath>
+     </Reference>
+     <Reference Include="com.unity.cinemachine.editor">
+     <HintPath>D:/CalebArulandu/Projects/GameDevelopment/Projects/Current/LD49/Library/ScriptAssemblies/com.unity.cinemachine.editor.dll</HintPath>
+     </Reference>
      <Reference Include="Unity.2D.Animation.Triangle.Runtime">
      <HintPath>D:/CalebArulandu/Projects/GameDevelopment/Projects/Current/LD49/Library/ScriptAssemblies/Unity.2D.Animation.Triangle.Runtime.dll</HintPath>
      </Reference>
@@ -778,12 +786,6 @@
      </Reference>
      <Reference Include="Unity.VisualScripting.State">
      <HintPath>D:/CalebArulandu/Projects/GameDevelopment/Projects/Current/LD49/Library/ScriptAssemblies/Unity.VisualScripting.State.dll</HintPath>
-     </Reference>
-     <Reference Include="com.unity.cinemachine.editor">
-     <HintPath>D:/CalebArulandu/Projects/GameDevelopment/Projects/Current/LD49/Library/ScriptAssemblies/com.unity.cinemachine.editor.dll</HintPath>
-     </Reference>
-     <Reference Include="Cinemachine">
-     <HintPath>D:/CalebArulandu/Projects/GameDevelopment/Projects/Current/LD49/Library/ScriptAssemblies/Cinemachine.dll</HintPath>
      </Reference>
   </ItemGroup>
   <ItemGroup>

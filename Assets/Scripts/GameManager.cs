@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -9,6 +11,8 @@ public class GameManager : MonoBehaviour
     public bool isPlaying = true;
 
     public GameObject endGameCanvas;
+    public TextMeshProUGUI timerTxt;
+    private float _timer;
 
     private void OnGUI()
     {
@@ -25,9 +29,10 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         SortSprites();
+        _timer += Time.deltaTime;
     }
 
-    void SortSprites()
+    public void SortSprites()
     {
         foreach (var sprite in FindObjectsOfType<SpriteRenderer>())
         {
@@ -45,16 +50,10 @@ public class GameManager : MonoBehaviour
 
     public void OnLose()
     {
-        foreach (var barrel in FindObjectsOfType<Barrel>())
-        {
-            if (barrel && !barrel.exploded)
-            {
-                StartCoroutine(barrel.Explode());
-            }
-        }
-        
         isPlaying = false;
-        
+        timerTxt.text = _timer.ToString();
+        timerTxt.text = timerTxt.text.Substring(0, timerTxt.text.IndexOf('.')) +
+                        timerTxt.text.Substring(timerTxt.text.IndexOf('.'), 3) + 's';
         endGameCanvas.SetActive(true);
     }
 

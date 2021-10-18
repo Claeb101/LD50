@@ -1,16 +1,26 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using UnityEditor;
 using UnityEngine;
 
 public class BarrelSpawner : MonoBehaviour
 {
+    public float chainExplodeDelay = 0.2f;
     public GameObject barrelPf;
 
     public int cols, rows;
 
     public float colSep, rowSep;
-    // Start is called before the first frame update
-    void Start()
+    private bool _exploded;
+
+    private void Start()
+    {
+        _exploded = false;
+    }
+
+    public void Generate()
     {
         for (int i = 0; i < cols; i++)
         {
@@ -23,9 +33,31 @@ public class BarrelSpawner : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Explode(Barrel barrel)
     {
+        if (!_exploded)
+        {
+            Debug.Log("explode first time");
+            _exploded = true;
+            StartCoroutine(ExplodeBarrels(barrel));
+        }
+    }
+    public IEnumerator ExplodeBarrels(Barrel src)
+    {
+        Debug.Log("explode barrels");
+        FindObjectOfType<GameManager>().OnLose();
         
+        foreach (
+            var barrel in GetComponentsInChildren<Barrel>().OrderBy(
+                b => (b.transform.position-src.transform.position).sqrMagnitude
+            )
+        )
+        {
+            if (barrel && !barrel.exploded)
+            {
+                barrel.Explode();
+                yield return new WaitForSeconds(chainExplodeDelay);
+            }
+        }
     }
 }

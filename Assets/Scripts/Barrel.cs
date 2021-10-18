@@ -5,11 +5,12 @@ using UnityEngine;
 
 public class Barrel : MonoBehaviour
 {
-    public float chainDelay = 0.5f;
+    public GameObject explodeFX;
     private Target _target;
-    public bool exploded = false;
 
     private GameManager _manager;
+
+    public bool exploded = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,20 +21,15 @@ public class Barrel : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (_target.health <= 0f) StartCoroutine(Explode());
+        if (_target.health <= 0f) Explode();
     }
 
-    public IEnumerator Explode()
+    public void Explode()
     {
+        Instantiate(explodeFX, transform.position, Quaternion.identity);
         exploded = true;
-        Debug.Log("exploding " + gameObject.name);
-        GetComponent<AudioSource>().Play();
-        
-        yield return new WaitForSeconds(chainDelay);
-        if (_manager.isPlaying)
-        {
-            _manager.OnLose();
-        }
+
+        GetComponentInParent<BarrelSpawner>().Explode(this);
 
         Destroy(gameObject);
     }

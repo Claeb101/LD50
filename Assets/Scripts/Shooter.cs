@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Shooter : MonoBehaviour
 {
+    public GameObject deathFX;
     public GameObject bulletPf;
     public Transform shootPoint;
 
@@ -118,6 +119,7 @@ public class Shooter : MonoBehaviour
     
     public void Die()
     {
+        Instantiate(deathFX, transform.position, Quaternion.identity);
         Destroy(gameObject);
     }
 

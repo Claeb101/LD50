@@ -1,42 +1,65 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class Spawner : MonoBehaviour
+[Serializable]
+public class SpawnerOption
 {
     public GameObject spawnPf;
+    public float freq;
+}
 
-    public float delayExpDec = 0.75f;
-    public float delay = 5f;
-    public float delayRand = 2f;
+public class Spawner : MonoBehaviour
+{
+    public List<SpawnerOption> spawnPfs;
+    public AnimationCurve delayOverWaves;
+    public AnimationCurve sizeOverWaves;
     public float spawnWidth, spawnHeight;
 
+    [SerializeField] private int wave = 0;
     private bool _canSpawn = true;
-    // Start is called before the first frame update
-    void Start()
+
+    private void Update()
     {
-        
+        if (_canSpawn) StartCoroutine(SpawnWave());
     }
 
-    // Update is called once per frame
-    void Update()
+    IEnumerator SpawnWave()
     {
-        if (_canSpawn) StartCoroutine(Spawn());
-    }
-
-    IEnumerator Spawn()
-    {
-        if (!_canSpawn) yield return null;
-
-        Vector3 spawnPos = new Vector3(Random.Range(-spawnHeight/2, spawnHeight/2), Random.Range(-spawnWidth/2, spawnWidth/2));
-        Instantiate(spawnPf, spawnPos+transform.position, Quaternion.identity, transform);
-        delay *= delayExpDec;
-        
         _canSpawn = false;
-        yield return new WaitForSeconds(delay + Random.Range(delay*(1-delayRand), delay*delayRand));
+
+        for (int i = 0; i < sizeOverWaves.Evaluate(wave); i++)
+        {
+            Spawn();
+        }
+        
+        wave++;
+        
+        yield return new WaitForSeconds(delayOverWaves.Evaluate(wave));
         _canSpawn = true;
+    }
+    
+    void Spawn()
+    {
+        GameObject spawnPf = null;
+        float v = Random.value, sum = 0f;
+        foreach(SpawnerOption option in spawnPfs)
+        {
+            sum += option.freq;
+            if (v < sum)
+            {
+                spawnPf = option.spawnPf;
+                break;
+            }
+        }
+        
+        
+        Vector3 spawnPos = new Vector3(Random.Range(-spawnWidth/2, spawnWidth/2), Random.Range(-spawnHeight/2, spawnHeight/2));
+        Instantiate(spawnPf, spawnPos+transform.position, Quaternion.identity, transform);
+        Debug.Log("Spawned " + spawnPf.name + " at " + (spawnPos+transform.position));
     }
 
     private void OnDrawGizmos()

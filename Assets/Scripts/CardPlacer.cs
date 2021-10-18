@@ -6,6 +6,8 @@ using UnityEngine.InputSystem.Controls;
 
 public class CardPlacer : MonoBehaviour
 {
+    public GameObject seedsCounter;
+    public GameObject placeableArea;
     private Camera _mainCam;
     private CardSelector _selector;
     private Collider2D _validArea;
@@ -15,7 +17,7 @@ public class CardPlacer : MonoBehaviour
     void Start()
     {
         _selector = FindObjectOfType<CardSelector>();
-        _validArea = GetComponentInChildren<Collider2D>();
+        _validArea = placeableArea.GetComponent<Collider2D>();
         _mainCam = FindObjectOfType<Camera>();
         _vineyard = GetComponent<Vineyard>();
     }
@@ -24,6 +26,8 @@ public class CardPlacer : MonoBehaviour
     void Update()
     {
         var mouse = Mouse.current;
+        
+        placeableArea.GetComponent<Animator>().SetBool("Active", _selector.selectedCard != null);
         if (_selector.selectedCard != null)
         {
             if (mouse.leftButton.wasReleasedThisFrame)
@@ -39,7 +43,7 @@ public class CardPlacer : MonoBehaviour
                     }
                     else
                     {
-                        Debug.Log("Can't buy");
+                        seedsCounter.GetComponent<Animator>().SetTrigger("Empty");
                     }
                 }
             }
